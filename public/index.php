@@ -41,7 +41,7 @@ if ($router->match($url)) {
 //Test the Post Controller - Dynamcially 
 
 $class_name = 'Post'; 
-$method_name = 'add' ; 
+$method_name = 'add' ;
 
 
 
@@ -51,7 +51,7 @@ if(class_exists($class_name) )
 {
     $post = new Post()  ;
 
-    if(is_callable([$post, $method_name]))
+    if(is_callable([$post, $add]))
       {
         $sum =  call_user_func_array([$post, $method_name], [4, 5]); 
         echo 'Sum = ' . $sum; 
