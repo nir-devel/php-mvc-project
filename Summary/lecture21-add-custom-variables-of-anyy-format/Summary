@@ -138,6 +138,7 @@ echo '</pre>';
 // Match the requested route
 $url = $_SERVER['QUERY_STRING'];
 
+
 if ($router->match($url)) {
     echo '<pre>';
     var_dump($router->getParams());
@@ -145,6 +146,7 @@ if ($router->match($url)) {
 } else {
     echo "No route found for URL '$url'";
 }
+
 
 
 At the moment I can add a route that matches several URL's with variables parts
