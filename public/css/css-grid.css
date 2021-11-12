@@ -1,0 +1,15 @@
+body{
+    display: grid;
+    grid-template-columns: 15em auto 20em;
+    grid-template-rows: min-content auto min-content;
+}
+
+header{
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+footer{
+    grid-column-start: 1;
+    grid-column-end: 4;
+}

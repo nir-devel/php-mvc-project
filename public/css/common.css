@@ -1,0 +1,16 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+html, body{
+    background-color: aqua;
+    height: 100%
+
+}
+
+header, nav, main, aside, footer {
+    background-color: #f7f7f7;
+    border: black 2px solid;
+}

@@ -1,5 +1,6 @@
 <?php
 
+require '../App/Controllers/Posts.php'; 
 /**
  * Router
  *
@@ -8,6 +9,7 @@
 class Router
 {
 
+    
     /**
      * Associative array of routes (the routing table)
      * @var array
@@ -43,6 +45,62 @@ class Router
         $route = '/^' . $route . '$/i';
 
         $this->routes[$route] = $params;
+    }
+
+    /**
+     * Dispatch the 
+     * @param string $url : The route URL
+     * 
+     * @return void
+     */
+
+    public function dispatch($url)
+    {
+        //NOTE: IF THERE IS A MATCH - THE PARAMS array property will be set to [controller, action]
+        //of the given URL
+        if($this->match($url))
+        {
+           //Fetch the controller name from the $params property and convert to studlyCaps
+           $controller = $this->params['controller']; 
+        //    echo 'dispatch(): $controller Before studlyCase: '. $controller . '<br>'; 
+        //    echo $controller; 
+           $controller = $this->convertToStudlyCaps($controller); 
+        //    echo 'dispatch(): $controller After studlyCase: '. $controller . '<br>'; 
+          
+
+          if(class_exists($controller))
+          {
+            $controllerObject = new $controller(); 
+
+            //Fetch the action method and voncert to CamelCase
+            $action = $this->params['action']; 
+            // echo "<br>"; 
+            // echo "dispatch(): The method name BEFORE convert to camel case: $action";
+            $action = $this->convertToCamelCase($action); 
+            // echo "<br>"; 
+            // echo "dispatch(): The method name AFTER convert to camel case: $action <br>";
+
+            if(is_callable([$controllerObject, $action]))
+            {
+
+                $controllerObject->$action(); 
+            }
+            else
+            {
+                echo "Method $action (in controller $controller) not found!"; 
+            }
+
+          }
+          else
+          {
+              echo "Controller class $controller not found";
+          }
+
+        }
+        else
+        {
+            echo "No match found for the url $url "; 
+        }
     }
 
     /**
@@ -89,5 +147,20 @@ class Router
     public function getParams()
     {
         return $this->params;
+    }
+
+    /**
+     * @param string $str
+     * 
+     * @return string : studlyCaps
+     */
+    public function convertToStudlyCaps($str)
+    {
+        return str_replace(' ','',  ucwords(str_replace('-', ' ', $str)));
+    }
+
+    public function convertToCamelCase($str)
+    {
+        return lcfirst($this->convertToStudlyCaps($str));
     }
 }
